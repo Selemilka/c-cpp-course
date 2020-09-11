@@ -1,0 +1,1 @@
+int quadratic_solve(double a, double b, double c, double *solutions);
