@@ -1,24 +1,35 @@
 #include "stdio.h"
-#include "quadratic.h"
+#include "polynomial.h"
 #include "math.h"
-#include "tests.h"
 #include "math_utils.h"
 
 int main() {
-    double roots[2];
-    int number_of_roots = quadratic_solve(3, -2, -2, roots);
-    if (number_of_roots == -1) {
-        printf("Infitnity\n");
-    } else {
-        printf("%d roots: ", number_of_roots);
-        for (int i = 0; i < number_of_roots; ++i)
-            printf("%.10f ", roots[i]);
-        printf("\n");
+    double a = NAN, b = NAN, c = NAN;
+    printf("Input a, b, c for equasion ax^2 + bx + c = 0:\n");
+    if (scanf("%lf %lf %lf", &a, &b, &c) != 3) {
+        printf("Wrong input!\n");
+        return 0;
     }
-        
-    ASSERT(number_of_roots == 2);
-    ASSERT(close_to(roots[0], -1.2152504370d));
-    ASSERT(close_to(roots[1],  0.5485837704d));
+
+    double roots[2];
+    int number_of_roots = quadratic_solve(a, b, c, roots);
+    
+    switch (number_of_roots) {
+        case -2: 
+            printf("Error while counting arithmetics!\n");
+            break;
+        case -1:
+            printf("There are infinity number of roots!\n");
+            break;
+        case 0:
+            printf("0 roots.\n");
+            break;
+        default:
+            printf("%d roots: ", number_of_roots);
+            for (int i = 0; i < number_of_roots; ++i)
+                printf("%.10f ", is_zero(roots[i])? 0 : roots[i]);
+            printf("\n");
+    }
 
     return 0;
 }
