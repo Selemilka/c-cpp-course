@@ -1,32 +1,27 @@
 #include "polynomial.h"
 
+#include "limits.h"
 #include "math.h"
 #include "math_utils.h"
-#include "limits.h"
 
 /**
- * @brief helper function for counting discriminant 
+ * @brief helper function for counting discriminant
  * for quadratic equasion ax^2 + bx + c = 0
- * 
+ *
  * @param [in] a coefficient for x^2
  * @param [in] b coefficient for x^1
  * @param [in] c coefficient for x^0
- * 
+ *
  * @return discriminant (no check isfinite)
-*/
-static double discriminant(double a,
-                           double b,
-                           double c);
+ */
+static double discriminant(double a, double b, double c);
 
 // ax + b = 0
-int linear_solve(double a, 
-                 double b, 
-                 double* roots) {
+int linear_solve(double a, double b, double *roots) {
     if (close_to(a, 0)) {
         if (close_to(b, 0)) {
             return -1;
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -35,16 +30,12 @@ int linear_solve(double a,
 }
 
 // ax^2 + bx + c = 0
-int quadratic_solve(double a,
-                    double b,
-                    double c,
-                    double* roots) 
-{
+int quadratic_solve(double a, double b, double c, double *roots) {
     if (!isfinite(a) || !isfinite(b) || !isfinite(c)) {
         return -2;
     }
-    
-    if (close_to(a, 0)) { 
+
+    if (close_to(a, 0)) {
         return linear_solve(b, c, roots);
     }
 
@@ -65,8 +56,6 @@ int quadratic_solve(double a,
     return 2;
 }
 
-static double discriminant(double a,
-                           double b,
-                           double c) {
+static double discriminant(double a, double b, double c) {
     return b * b - 4 * a * c;
 }
